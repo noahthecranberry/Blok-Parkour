@@ -16,28 +16,26 @@ public class moveScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (up)
-            {
                 StartCoroutine("MoveRight");
                 StartCoroutine("RotateRight");
-            }
-            else
-            {
-                //Do the same stuff but with the other y jump.
-            }
-            up = !up;
+                up = !up;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (up)
-            {
                 StartCoroutine("MoveLeft");
                 StartCoroutine("RotateLeft");
-            }
-            else
-            {
-                //Do the same stuff but with the other y jump.
-            }
+                up = !up;
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            StartCoroutine("MoveUp");
+            StartCoroutine("RotateUp");
+            up = !up;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            StartCoroutine("MoveDown");
+            StartCoroutine("RotateDown");
             up = !up;
         }
     }
@@ -45,7 +43,15 @@ public class moveScript : MonoBehaviour
     public IEnumerator MoveRight()
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, -0.5f, 0f);
+        Vector3 FinalPosition;
+        if (up)
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, -0.5f, 0f);
+        }
+        else
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, 0.5f, 0f);
+        }
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
@@ -70,7 +76,15 @@ public class moveScript : MonoBehaviour
     public IEnumerator MoveLeft()
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, 0.5f, 0f);
+        Vector3 FinalPosition;
+        if (up)
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, -0.5f, 0f);
+        }
+        else
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, 0.5f, 0f);
+        }
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
@@ -83,6 +97,40 @@ public class moveScript : MonoBehaviour
     public IEnumerator RotateLeft()
     {
         Vector3 degrees = new Vector3(0, 0, 90f);
+        Quaternion From = this.transform.rotation;
+        Quaternion To = From * Quaternion.Euler(degrees);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            yield return null;
+        }
+    }
+
+
+    public IEnumerator MoveUp()
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition;
+        if (up)
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(0f, -0.5f, 1.5f);
+        }
+        else
+        {
+            FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(0f, 0.5f, 1.5f);
+        }
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+
+    public IEnumerator RotateUp()
+    {
+        Vector3 degrees = new Vector3(90f, 0, 0);
         Quaternion From = this.transform.rotation;
         Quaternion To = From * Quaternion.Euler(degrees);
         for (int i = 1; i <= 15; i++)
