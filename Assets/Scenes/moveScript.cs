@@ -121,7 +121,7 @@ public class moveScript : MonoBehaviour
 
     public IEnumerator RotateUp()
     {
-        Vector3 degrees = new Vector3(90f , 0f, 0f);
+        Vector3 degrees = new Vector3(90f, 0f, 0f);
         Quaternion From = this.transform.rotation;
         Quaternion To = From * Quaternion.Euler(degrees);
         for (int i = 1; i <= 15; i++)
