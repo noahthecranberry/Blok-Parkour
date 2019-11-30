@@ -36,14 +36,16 @@ public class moveScript : MonoBehaviour
 
             else if (one && !two)
             {
-                Debug.Log("Hello2");
+                StartCoroutine("MoveRightU");
+                StartCoroutine("RotateRightU");
                 one = !one;
-                two = true;
+                
             }
 
             else if (!one && two)
             {
-
+                StartCoroutine("MoveRight");
+                StartCoroutine("SpinRight");
             }
 
         }
@@ -54,7 +56,7 @@ public class moveScript : MonoBehaviour
             if (!one && !two)
             {
 
-                two = !two;
+                one = !one;
                 StartCoroutine("MoveLeft");
                 StartCoroutine("RotateLeft");
             }
@@ -62,11 +64,14 @@ public class moveScript : MonoBehaviour
             else if (one && !two)
             {
                 one = !one;
+                StartCoroutine("MoveLeftU");
+                StartCoroutine("RotateLeft");
             }
 
             else if (!one && two)
             {
-
+                StartCoroutine("ShiftLeft");
+                StartCoroutine("SpinLeft");
             }
 
         }
@@ -76,7 +81,7 @@ public class moveScript : MonoBehaviour
 
             if (!one && !two)
             {
-                
+
                 StartCoroutine("MoveBack");
                 StartCoroutine("RotateBack");
                 two = true;
@@ -91,6 +96,8 @@ public class moveScript : MonoBehaviour
             else if (!one && two)
             {
                 two = !two;
+                StartCoroutine("MoveBack");
+                StartCoroutine("RotateBack");
             }
 
         }
@@ -170,10 +177,22 @@ public class moveScript : MonoBehaviour
         }
     }
 
+    public IEnumerator RotateRightU() //from down to up
+    {
+        Vector3 degrees = new Vector3(0, 1.5f, -90f);
+        Quaternion From = this.transform.rotation;
+        Quaternion To = From * Quaternion.Euler(degrees);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            yield return null;
+        }
+    }
+
     public IEnumerator MoveLeft()
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, 0.5f, 0f);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, -0.5f, 0f);
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
@@ -219,7 +238,85 @@ public class moveScript : MonoBehaviour
             yield return null;
         }
     }
+
+
+    public IEnumerator ShiftRight()
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, 0f, 0f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+    public IEnumerator SpinRight()
+    {
+        Vector3 degrees = new Vector3(0, -90f, 0f);
+        Quaternion From = this.transform.rotation;
+        Quaternion To = From * Quaternion.Euler(degrees);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            yield return null;
+        }
+    }
+    public IEnumerator ShiftLeft()
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, 0f, 0f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+    public IEnumerator SpinLeft()
+    {
+        Vector3 degrees = new Vector3(0, 90f, 0f);
+        Quaternion From = this.transform.rotation;
+        Quaternion To = From * Quaternion.Euler(degrees);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            yield return null;
+        }
+    }
+
+    public IEnumerator MoveLeftU() //From down position to up
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(-1.5f, 0.5f, 0f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+
+    public IEnumerator MoveRightU() //From down position to up
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, -0.5f, 0f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
 }
+
+
+
+
 
 /*if (up)
            {
