@@ -8,125 +8,139 @@ public class moveScript : MonoBehaviour
 
     public bool one;
     public bool two;
+    public bool inputUp;
 
     // Start is called before the first frame update
     void Start()
     {
         one = false;
         two = false;
+        inputUp = true;
         //up = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (inputUp)
         {
-            if (!one && !two) //up
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                one = !one;
-                StartCoroutine("MoveRight");
-                StartCoroutine("RotateRight");
-                one = true;
+                StartCoroutine("RestInput");
+                if (!one && !two) //up
+                {
+                    one = !one;
+                    StartCoroutine("MoveRight");
+                    StartCoroutine("RotateRight");
+                    one = true;
 
-                Debug.Log(one);
-                Debug.Log(two);
+                    Debug.Log(one);
+                    Debug.Log(two);
+
+                }
+
+                else if (one && !two)
+                {
+                    StartCoroutine("MoveRightU");
+                    StartCoroutine("RotateRight");
+                    one = !one;
+
+                }
+
+                else if (!one && two)
+                {
+                    StartCoroutine("MoveRightDD");
+                    StartCoroutine("SpinRight");
+                }
 
             }
 
-            else if (one && !two)
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                StartCoroutine("MoveRightU");
-                StartCoroutine("RotateRightU");
-                one = !one;
-                
-            }
+                StartCoroutine("RestInput");
+                if (!one && !two)
+                {
 
-            else if (!one && two)
-            {
-                StartCoroutine("MoveRight");
-                StartCoroutine("SpinRight");
-            }
+                    one = !one;
+                    StartCoroutine("MoveLeft");
+                    StartCoroutine("RotateLeft");
+                }
 
-        }
+                else if (one && !two)
+                {
+                    one = !one;
+                    StartCoroutine("MoveLeftU");
+                    StartCoroutine("RotateLeft");
+                }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-
-            if (!one && !two)
-            {
-
-                one = !one;
-                StartCoroutine("MoveLeft");
-                StartCoroutine("RotateLeft");
-            }
-
-            else if (one && !two)
-            {
-                one = !one;
-                StartCoroutine("MoveLeftU");
-                StartCoroutine("RotateLeft");
-            }
-
-            else if (!one && two)
-            {
-                StartCoroutine("ShiftLeft");
-                StartCoroutine("SpinLeft");
-            }
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-
-            if (!one && !two)
-            {
-
-                StartCoroutine("MoveBack");
-                StartCoroutine("RotateBack");
-                two = true;
-            }
-
-            else if (one && !two)
-            {
+                else if (!one && two)
+                {
+                    StartCoroutine("ShiftLeft");
+                    StartCoroutine("SpinLeft");
+                }
 
             }
 
-
-            else if (!one && two)
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                two = !two;
-                StartCoroutine("MoveBack");
-                StartCoroutine("RotateBack");
-            }
+                StartCoroutine("RestInput");
+                if (!one && !two)
+                {
 
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
+                    StartCoroutine("MoveBackD");
+                    StartCoroutine("RotateBack");
+                    two = true;
+                }
 
-            if (!one && !two)
-            {
-                two = true;
-                StartCoroutine("MoveUp");
-                StartCoroutine("RotateUp");
-                //Debug.Log("HELLO");
+                else if (one && !two)
+                {
 
-            }
+                }
 
-            else if (one && !two)
-            {
 
-            }
-
-            else if (!one && two)
-            {
-                two = true;
+                else if (!one && two)
+                {
+                    two = !two;
+                    StartCoroutine("MoveBack");
+                    StartCoroutine("RotateBack");
+                }
 
             }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                StartCoroutine("RestInput");
+                if (!one && !two)
+                {
+                    two = true;
+                    StartCoroutine("MoveUp");
+                    StartCoroutine("RotateUp");
+                    //Debug.Log("HELLO");
 
+                }
+
+                else if (one && !two)
+                {
+
+                }
+
+                else if (!one && two)
+                {
+                    StartCoroutine("MoveUpU");
+                    StartCoroutine("RotateUp");
+                    two = false;
+
+                }
+
+            }
         }
     }
 
+    public IEnumerator RestInput()
+    {
+        inputUp = false;
+        yield return new WaitForSeconds(0.5f);
+        inputUp = true;
+    }
     public IEnumerator MoveUp()
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -152,7 +166,20 @@ public class moveScript : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveRight()
+    public IEnumerator MoveUpU() //From down position to up
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(0f, .5f, 1.5f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+
+    public IEnumerator MoveRight() //up to down
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, -0.5f, 0f);
@@ -164,22 +191,34 @@ public class moveScript : MonoBehaviour
             yield return null;
         }
     }
-
-    public IEnumerator RotateRight()
+    public IEnumerator MoveRightDD() //down to down
     {
-        Vector3 degrees = new Vector3(0, 0, -90f);
-        Quaternion From = this.transform.rotation;
-        Quaternion To = From * Quaternion.Euler(degrees);
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, 0f, 0f);
         for (int i = 1; i <= 15; i++)
         {
-            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
             yield return null;
         }
     }
 
-    public IEnumerator RotateRightU() //from down to up
+    public IEnumerator MoveRightU()
     {
-        Vector3 degrees = new Vector3(0, 1.5f, -90f);
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, .5f, 0f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+    public IEnumerator RotateRight()
+    {
+        Vector3 degrees = new Vector3(0, 0, -90f);
         Quaternion From = this.transform.rotation;
         Quaternion To = From * Quaternion.Euler(degrees);
         for (int i = 1; i <= 15; i++)
@@ -218,6 +257,19 @@ public class moveScript : MonoBehaviour
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(0f, 0.5f, -1.5f);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
+            yield return null;
+        }
+    }
+
+    public IEnumerator MoveBackD()
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(0f, -.5f, -1.5f);
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
@@ -300,18 +352,6 @@ public class moveScript : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveRightU() //From down position to up
-    {
-        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, -0.5f, 0f);
-        for (int i = 1; i <= 15; i++)
-        {
-            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
-            //Debug.Log(i/10);
-            //Debug.Log(this.transform.position);
-            yield return null;
-        }
-    }
 }
 
 
