@@ -1,4 +1,4 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,9 @@ public class moveScript : MonoBehaviour
     public bool one;
     public bool two;
     public bool inputUp;
+    public float x;
+    public float y;
+    public float z;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +33,12 @@ public class moveScript : MonoBehaviour
                 if (!one && !two) //up
                 {
                     one = !one;
+
+                    x = 0f;
+                    y = 0f;
+                    z = 90f;
                     StartCoroutine("MoveRight");
-                    StartCoroutine("RotateRight");
+                    StartCoroutine("Rotate");
                     one = true;
 
                     Debug.Log(one);
@@ -60,17 +67,23 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two)
                 {
-
+                    x = 0f;
+                    y = 0f;
+                    z = -90f;
                     one = !one;
                     StartCoroutine("MoveLeft");
-                    StartCoroutine("RotateLeft");
+                    StartCoroutine("Rotate");
                 }
 
                 else if (one && !two)
                 {
+                    x = 0f;
+                    y = 0f;
+                    y = 0f;
+                    z = -90f;
                     one = !one;
                     StartCoroutine("MoveLeftU");
-                    StartCoroutine("RotateLeft");
+                    StartCoroutine("Rotate");
                 }
 
                 else if (!one && two)
@@ -243,14 +256,11 @@ public class moveScript : MonoBehaviour
             yield return null;
         }
     }
-    public IEnumerator RotateRight()
+    public IEnumerator Rotate()
     {
-        Vector3 degrees = new Vector3(0, 0, -90f);
-        Quaternion From = this.transform.rotation;
-        Quaternion To = From * Quaternion.Euler(degrees);
-        for (int i = 1; i <= 15; i++)
+        for (int j = 0; j < 15; j++)
         {
-            this.transform.rotation = Quaternion.Slerp(From, To, (float)i / 15f);            //Debug.Log(i/10);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x + x / 15, transform.eulerAngles.y + y / 15, transform.eulerAngles.z + z / 15);
             yield return null;
         }
     }
@@ -391,7 +401,7 @@ public class moveScript : MonoBehaviour
 
 }
 
-*/
+
 
 
 
