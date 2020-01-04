@@ -9,9 +9,13 @@ public class moveScript : MonoBehaviour
     public bool one;
     public bool two;
     public bool inputUp;
-    public float x;
-    public float y;
-    public float z;
+    public float Rx; //For rotation.
+    public float Ry;
+    public float Rz;
+
+    public float Dx; //For movement.
+    public float Dy;
+    public float Dz;
 
     // Start is called before the first frame update
     void Start()
@@ -32,14 +36,14 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
                 {
-                    one = !one;
 
-                    x = 0f;
-                    y = 0f;
-                    z = 90f;
-                    StartCoroutine("MoveRight");
+                    SetRVals(0f, 0f, -90f);
+                    SetMVals(1.5f, -0.5f, 0f);
+                    StartCoroutine("Shift");
                     StartCoroutine("Rotate");
+
                     one = true;
+                    two = false;
 
                     Debug.Log(one);
                     Debug.Log(two);
@@ -48,9 +52,13 @@ public class moveScript : MonoBehaviour
 
                 else if (one && !two)
                 {
-                    StartCoroutine("MoveRightU");
-                    StartCoroutine("RotateRight");
-                    one = !one;
+                    SetRVals(0f, 0f, -90f);
+                    SetMVals(1.5f, 0.5f, 0f);
+                    StartCoroutine("Shift");
+                    StartCoroutine("Rotate");
+
+                    one = false;
+                    two = false;
 
                 }
 
@@ -67,9 +75,7 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two)
                 {
-                    x = 0f;
-                    y = 0f;
-                    z = -90f;
+                    SetRVals(0f, 0f, 90f);
                     one = !one;
                     StartCoroutine("MoveLeft");
                     StartCoroutine("Rotate");
@@ -77,10 +83,7 @@ public class moveScript : MonoBehaviour
 
                 else if (one && !two)
                 {
-                    x = 0f;
-                    y = 0f;
-                    y = 0f;
-                    z = -90f;
+                    SetRVals(0f, 0f, 90f);
                     one = !one;
                     StartCoroutine("MoveLeftU");
                     StartCoroutine("Rotate");
@@ -149,6 +152,20 @@ public class moveScript : MonoBehaviour
 
             }
         }
+    }
+
+    public void SetRVals(float myx, float myy, float myz)
+    {
+        Rx = myx;
+        Ry = myy;
+        Rz = myz;
+    }
+
+    public void SetMVals(float myx, float myy, float myz)
+    {
+        Dx = myx;
+        Dy = myy;
+        Dz = myz;
     }
 
     public IEnumerator RestInput()
@@ -260,7 +277,20 @@ public class moveScript : MonoBehaviour
     {
         for (int j = 0; j < 15; j++)
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x + x / 15, transform.eulerAngles.y + y / 15, transform.eulerAngles.z + z / 15);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x + Rx / 15, transform.eulerAngles.y + Ry / 15, transform.eulerAngles.z + Rz / 15);
+            yield return null;
+        }
+    }
+
+    public IEnumerator Shift()
+    {
+        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(Dx, Dy, Dz);
+        for (int i = 1; i <= 15; i++)
+        {
+            this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
+            //Debug.Log(i/10);
+            //Debug.Log(this.transform.position);
             yield return null;
         }
     }
@@ -268,7 +298,7 @@ public class moveScript : MonoBehaviour
     public IEnumerator ShiftRight()
     {
         Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1.5f, 0f, 0f);
+        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(1f, 0f, 0f);
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
