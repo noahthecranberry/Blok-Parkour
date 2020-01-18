@@ -8,6 +8,8 @@ public class moveScript : MonoBehaviour
     public Transform XDown;
     public Transform ZDown;
 
+    int collisionNumber;
+
     public bool one;
     public bool two;
 
@@ -243,6 +245,23 @@ public class moveScript : MonoBehaviour
             yield return null;
         }
     }
+
+    public void increment() {
+        
+    }
+
+    public void decrement() {
+
+    }
+
+    void checkLose()
+    {
+        if(collisionNumber < 2 && (one || two))
+        {
+            this.GetComponent<Rigidbody>().isKinematic = false;
+        }
+    }
+
 }
 
 
