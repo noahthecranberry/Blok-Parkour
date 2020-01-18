@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoalScript : MonoBehaviour
 {
@@ -42,11 +43,11 @@ public class GoalScript : MonoBehaviour
 
     private IEnumerator ProtocolFinish()
     {
-        for(int i = 1;  i <= 40; i++)
+        for (int i = 1; i <= 40; i++)
         {
             Cube.transform.position -= new Vector3(0f, 0.05f, 0f);
             yield return null;
-            //Switch scene here.
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
