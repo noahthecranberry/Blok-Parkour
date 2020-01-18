@@ -6,11 +6,13 @@ public class checkCollision : MonoBehaviour
 {
 
     public GameObject player;
+    private moveScript MoveScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player");
+        MoveScript = player.GetComponent<moveScript>();
     }
 
     // Update is called once per frame
@@ -21,7 +23,8 @@ public class checkCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (player
+        MoveScript.increment();
+       // if (player
     }
 
     private void OnTriggerExit(Collider other)
