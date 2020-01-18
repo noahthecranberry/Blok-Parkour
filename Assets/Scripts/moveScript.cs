@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class moveScript : MonoBehaviour
 {
-    //bool up;
+    public Transform Up;
+    public Transform XDown;
+    public Transform ZDown;
 
     public bool one;
     public bool two;
+
     public bool inputUp;
+
     public float Rx; //For rotation.
     public float Ry;
     public float Rz;
@@ -37,10 +41,9 @@ public class moveScript : MonoBehaviour
                 if (!one && !two) //up
                 {
 
-                    SetRVals(0f, 0f, -90f);
                     SetMVals(1.5f, -0.5f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateXDown");
 
                     one = true;
                     two = false;
@@ -52,10 +55,9 @@ public class moveScript : MonoBehaviour
 
                 else if (one && !two) //down x
                 {
-                    SetRVals(0f, 0f, -90f);
                     SetMVals(1.5f, 0.5f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateUp");
 
                     one = false;
                     two = false;
@@ -63,13 +65,11 @@ public class moveScript : MonoBehaviour
 
                 else if (!one && two) // down z
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(1f, 0f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
 
-                    one = true;
-                    two = false;
+                    one = false; //No change
+                    two = true;
                 }
 
             }
@@ -79,10 +79,9 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(-1.5f, -0.5f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateXDown");
 
                     one = true;
                     two = false;
@@ -90,24 +89,21 @@ public class moveScript : MonoBehaviour
 
                 else if (one && !two) //down x
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(-1.5f, 0.5f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateUp");
 
-                    one = true;
+                    one = false;
                     two = false;
                 }
 
                 else if (!one && two) //down z
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(-1f, 0f, 0f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
 
-                    one = true;
-                    two = false;
+                    one = false; //No change.
+                    two = true;
                 }
 
             }
@@ -117,36 +113,31 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
                 {
-
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, -0.5f, -1.5f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateZDown");
 
-                    one = true;
-                    two = false;
+                    one = false;
+                    two = true;
                 }
 
                 else if (one && !two) //down x
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, 0f, -1f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
 
                     one = true;
-                    two = false;
+                    two = false; //No Change
                 }
 
 
                 else if (!one && two) //down z
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, 0.5f, -1.5f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateUp");
 
-                    one = true;
+                    one = false;
                     two = false;
                 }
 
@@ -156,46 +147,35 @@ public class moveScript : MonoBehaviour
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, -0.5f, 1.5f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateZDown");
 
-                    one = true;
-                    two = false;
+                    one = false;
+                    two = true;
                 }
 
                 else if (one && !two) //down x
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, 0f, 1f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
 
                     one = true;
-                    two = false;
+                    two = false; //No change
                 }
 
                 else if (!one && two) //down z
                 {
-                    SetRVals(0f, 0f, -90f);
-                    SetMVals(1.5f, -0.5f, 0f);
+                    SetMVals(0f, 0.5f, 1.5f);
                     StartCoroutine("Shift");
-                    StartCoroutine("Rotate");
+                    StartCoroutine("RotateUp");
 
-                    one = true;
+                    one = false;
                     two = false;
                 }
 
             }
         }
-    }
-
-    public void SetRVals(float myx, float myy, float myz)
-    {
-        Rx = myx;
-        Ry = myy;
-        Rz = myz;
     }
 
     public void SetMVals(float myx, float myy, float myz)
@@ -208,23 +188,53 @@ public class moveScript : MonoBehaviour
     public IEnumerator RestInput()
     {
         inputUp = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         inputUp = true;
     }
 
-    public IEnumerator Rotate()
+    public IEnumerator RotateUp()
     {
-        for (int j = 0; j < 15; j++)
+        Quaternion from = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
+        Quaternion to = new Quaternion(Up.rotation.x, Up.transform.rotation.y, Up.transform.rotation.z, Up.transform.rotation.w);
+
+        for (float j = 1; j <= 15; j++)
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x + Rx / 15, transform.eulerAngles.y + Ry / 15, transform.eulerAngles.z + Rz / 15);
+            Quaternion newRotation = Quaternion.Lerp(from, to, j / 15);
+            this.transform.rotation = new Quaternion(newRotation.x, newRotation.y, newRotation.z, newRotation.w);
+            yield return null;
+        }
+    }
+
+    public IEnumerator RotateXDown()
+    {
+        Quaternion from = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
+        Quaternion to = new Quaternion(XDown.rotation.x, XDown.transform.rotation.y, XDown.transform.rotation.z, XDown.transform.rotation.w);
+
+        for (float j = 1; j <= 15; j++)
+        {
+            Quaternion newRotation = Quaternion.Lerp(from, to, j/15);
+            this.transform.rotation = new Quaternion(newRotation.x, newRotation.y, newRotation.z, newRotation.w);
+            yield return null;
+        }
+    }
+
+    public IEnumerator RotateZDown()
+    {
+        Quaternion from = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
+        Quaternion to = new Quaternion(ZDown.rotation.x, ZDown.transform.rotation.y, ZDown.transform.rotation.z, ZDown.transform.rotation.w);
+
+        for (float j = 1; j <= 15; j++)
+        {
+            Quaternion newRotation = Quaternion.Lerp(from, to, j / 15);
+            this.transform.rotation = new Quaternion(newRotation.x, newRotation.y, newRotation.z, newRotation.w);
             yield return null;
         }
     }
 
     public IEnumerator Shift()
     {
-        Vector3 InitialPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 FinalPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z) + new Vector3(Dx, Dy, Dz);
+        Vector3 InitialPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 FinalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z) + new Vector3(Dx, Dy, Dz);
         for (int i = 1; i <= 15; i++)
         {
             this.transform.position = Vector3.Lerp(InitialPosition, FinalPosition, (float)i / 15f);
@@ -234,5 +244,6 @@ public class moveScript : MonoBehaviour
         }
     }
 }
+
 
     
