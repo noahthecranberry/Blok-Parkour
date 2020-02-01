@@ -8,7 +8,7 @@ public class moveScript : MonoBehaviour
     public Transform XDown;
     public Transform ZDown;
 
-    int collisionNumber;
+    public int collisionNumber = 0;
 
     public bool one;
     public bool two;
@@ -247,7 +247,7 @@ public class moveScript : MonoBehaviour
     }
 
     public void increment() {
-        
+        //if()
     }
 
     public void decrement() {
@@ -256,10 +256,20 @@ public class moveScript : MonoBehaviour
 
     void checkLose()
     {
-        if(collisionNumber < 2 && (one || two))
+        if( (collisionNumber == 2 && (one || two) ) || (collisionNumber == 1 && (one || two) ))
         {
             this.GetComponent<Rigidbody>().isKinematic = false;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        collisionNumber++;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        collisionNumber--;
     }
 
 }
