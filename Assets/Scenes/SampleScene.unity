@@ -2364,6 +2364,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2905302962362268324, guid: 85ec9491d5a4d2e42871bea4d54372a6,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1849247954}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85ec9491d5a4d2e42871bea4d54372a6, type: 3}
 --- !u!4 &1765751752 stripped
@@ -2408,7 +2413,7 @@ MonoBehaviour:
   Up: {fileID: 350907147}
   XDown: {fileID: 2038473939}
   ZDown: {fileID: 410268672}
-  collisionNumber: 1
+  collisionNumber: 0
   one: 0
   two: 0
   inputUp: 0
@@ -2502,7 +2507,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0

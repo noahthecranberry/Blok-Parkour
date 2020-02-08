@@ -5,13 +5,18 @@ using UnityEngine;
 public class checkCollision : MonoBehaviour
 {
 
-    public GameObject player;
+    GameObject player;
     private moveScript MoveScript;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
     void Start()
     {
-        player = GameObject.Find("Player");
         MoveScript = player.GetComponent<moveScript>();
     }
 

@@ -8,7 +8,8 @@ public class moveScript : MonoBehaviour
     public Transform XDown;
     public Transform ZDown;
 
-    public int collisionNumber = 0;
+    [SerializeField]
+    int collisionNumber = 0;
 
     public bool one;
     public bool two;
@@ -191,6 +192,7 @@ public class moveScript : MonoBehaviour
     {
         inputUp = false;
         yield return new WaitForSeconds(0.4f);
+        checkLose();
         inputUp = true;
     }
 
@@ -256,20 +258,23 @@ public class moveScript : MonoBehaviour
 
     void checkLose()
     {
-        if( (collisionNumber == 2 && (one || two) ) || (collisionNumber == 1 && (one || two) ))
+        if((collisionNumber != 2 && (one || two)) || (collisionNumber != 1 && (!one && !two) ))
         {
             this.GetComponent<Rigidbody>().isKinematic = false;
+            Debug.Log("you lose");
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("We entered" + other);
         collisionNumber++;
     }
 
     private void OnTriggerExit(Collider other)
     {
         collisionNumber--;
+        
     }
 
 }
