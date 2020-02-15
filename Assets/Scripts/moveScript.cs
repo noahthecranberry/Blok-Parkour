@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine;  
 
 public class moveScript : MonoBehaviour
 {
     public Transform Up;
     public Transform XDown;
     public Transform ZDown;
+
+// public GameObject Player;
 
     [SerializeField]
     int collisionNumber = 0;
@@ -193,6 +195,7 @@ public class moveScript : MonoBehaviour
         inputUp = false;
         yield return new WaitForSeconds(0.4f);
         checkLose();
+
         inputUp = true;
     }
 
@@ -261,6 +264,7 @@ public class moveScript : MonoBehaviour
         if((collisionNumber != 2 && (one || two)) || (collisionNumber != 1 && (!one && !two) ))
         {
             this.GetComponent<Rigidbody>().isKinematic = false;
+            this.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-500f, 500f), Random.Range(100f, 500f), Random.Range(-500f, 500f)));
             Debug.Log("you lose");
         }
     }

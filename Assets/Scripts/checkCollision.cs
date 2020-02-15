@@ -12,7 +12,7 @@ public class checkCollision : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+       player = GameObject.FindWithTag("Player");
     }
 
     void Start()
