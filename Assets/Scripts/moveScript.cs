@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;  
+using UnityEngine;
+using UnityEngine.UI;
 
 public class moveScript : MonoBehaviour
 {
     public Transform Up;
     public Transform XDown;
     public Transform ZDown;
+
+    public GameObject counter;
+    Text counterText;
+    public int moves;
 
 // public GameObject Player;
 
@@ -32,6 +37,11 @@ public class moveScript : MonoBehaviour
         one = false;
         two = false;
         inputUp = true;
+
+        moves = 0;
+        counterText = counter.GetComponent<Text>();
+        counterText.text = "No moves yet";
+        
         //up = true;
     }
 
@@ -40,7 +50,7 @@ public class moveScript : MonoBehaviour
     {
         if (inputUp)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow)) //"forward
             {
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
@@ -56,6 +66,9 @@ public class moveScript : MonoBehaviour
                     Debug.Log(one);
                     Debug.Log(two);
 
+                    moves += 1;
+                    counterText.text = moves.ToString();
+                    
                 }
 
                 else if (one && !two) //down x
@@ -66,6 +79,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = false;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (!one && two) // down z
@@ -75,6 +91,9 @@ public class moveScript : MonoBehaviour
 
                     one = false; //No change
                     two = true;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
             }
@@ -90,6 +109,9 @@ public class moveScript : MonoBehaviour
 
                     one = true;
                     two = false;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (one && !two) //down x
@@ -100,6 +122,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = false;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (!one && two) //down z
@@ -109,6 +134,9 @@ public class moveScript : MonoBehaviour
 
                     one = false; //No change.
                     two = true;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
             }
@@ -124,6 +152,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = true;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (one && !two) //down x
@@ -133,6 +164,9 @@ public class moveScript : MonoBehaviour
 
                     one = true;
                     two = false; //No Change
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
 
@@ -144,6 +178,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = false;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
             }
@@ -158,6 +195,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = true;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (one && !two) //down x
@@ -167,6 +207,9 @@ public class moveScript : MonoBehaviour
 
                     one = true;
                     two = false; //No change
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
                 else if (!one && two) //down z
@@ -177,6 +220,9 @@ public class moveScript : MonoBehaviour
 
                     one = false;
                     two = false;
+
+                    moves += 1;
+                    counterText.text = moves.ToString();
                 }
 
             }
