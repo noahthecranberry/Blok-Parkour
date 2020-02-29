@@ -21,6 +21,8 @@ public class moveScript : MonoBehaviour
     public bool one;
     public bool two;
 
+    public bool canMove;
+
     public bool inputUp;
 
     public float Rx; //For rotation.
@@ -38,6 +40,7 @@ public class moveScript : MonoBehaviour
         two = false;
         inputUp = true;
 
+        canMove = true;
         moves = 0;
         counterText = counter.GetComponent<Text>();
         counterText.text = "No moves yet";
@@ -50,7 +53,7 @@ public class moveScript : MonoBehaviour
     {
         if (inputUp)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow)) //"forward
+            if (Input.GetKeyDown(KeyCode.RightArrow) && canMove) //"forward
             {
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
@@ -98,7 +101,7 @@ public class moveScript : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && canMove )
             {
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
@@ -141,7 +144,7 @@ public class moveScript : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow) && canMove)
             {
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
@@ -184,7 +187,8 @@ public class moveScript : MonoBehaviour
                 }
 
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && canMove)
             {
                 StartCoroutine("RestInput");
                 if (!one && !two) //up
@@ -311,6 +315,7 @@ public class moveScript : MonoBehaviour
         {
             this.GetComponent<Rigidbody>().isKinematic = false;
             this.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-500f, 500f), Random.Range(100f, 500f), Random.Range(-500f, 500f)));
+            canMove = false;
             Debug.Log("you lose");
         }
     }
